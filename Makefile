@@ -13,4 +13,10 @@ lint:
 	./vendor/bin/sail composer phpstan
 
 test:
-	./vendor/bin/sail artisan test	
+	./vendor/bin/sail artisan test
+
+lint-fix:
+	composer phpcbf	
+
+deploy:
+	git push heroku main	
