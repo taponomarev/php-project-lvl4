@@ -1,6 +1,8 @@
 setup:
-	docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
-	cp .env.example .env
+	composer install
+		cp -n .env.example .env|| true
+		touch database/database.sqlite
+		docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
 
 start:
 	./vendor/bin/sail up -d

@@ -21,6 +21,7 @@ services:
             - pgsql
     pgsql:
         image: postgres:13
+        container_name: task-manager-db
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -28,6 +29,7 @@ services:
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+            PGDATA: /var/lib/postgresql/data
         volumes:
             - 'sailpgsql:/var/lib/postgresql/data'
         networks:
