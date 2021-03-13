@@ -11,16 +11,12 @@ Task Manager is a task management system similar to http://www.redmine.org/. It 
 
 * Docker and docker-compose
 
-## Setup
+## Setup and Run
 
 ```sh
-$ make setup
-$ make start
-```
-
-## Show locally
-
+$ make install
 * Open address: http://localhost
+```
 
 ## Demo
 

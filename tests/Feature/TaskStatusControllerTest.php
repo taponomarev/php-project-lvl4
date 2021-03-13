@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,11 +16,14 @@ class TaskStatusControllerTest extends TestCase
      */
     protected $seed = true;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $user = User::find(1);
+        $this->actingAs($user);
+    }
+
     public function testIndex()
     {
         $response = $this->get('task_statuses');
@@ -31,11 +35,7 @@ class TaskStatusControllerTest extends TestCase
     {
         $response = $this->get('/task_statuses/create');
         $response->assertStatus(200);
-        $response->assertSeeTextInOrder([
-            'Создать статус',
-            'Имя',
-            'Создать'
-        ]);
+        $response->assertSeeText('Добавить статус');
     }
 
     public function testStore()
@@ -52,17 +52,21 @@ class TaskStatusControllerTest extends TestCase
     {
         $response = $this->get('/task_statuses/1/edit');
         $response->assertStatus(200);
-        $response->assertSeeTextInOrder([
-            'Изменение статуса',
-            'Имя',
-            'Обновить',
-            'новый'
-        ]);
+        $response->assertSeeText('Изменить статус');
     }
 
     public function testUpdate()
     {
-        
+        $requestData = ['name' => 'Обновленный статус'];
+
+        $response = $this->patch('/task_statuses/1', $requestData);
+        $response->assertSessionHasNoErrors();
+        $response->assertSessionHas('flash_notification.0.level', 'success');
+        $response->assertRedirect('/task_statuses');
+        $this->assertDatabaseHas('task_statuses', [
+            'id' => 1,
+            'name' => 'Обновленный статус'
+        ]);
     }
 
     public function testDestroy()

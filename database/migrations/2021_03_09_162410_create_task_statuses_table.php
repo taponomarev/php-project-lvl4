@@ -15,7 +15,9 @@ class CreateTaskStatusesTable extends Migration
     {
         Schema::create('task_statuses', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('creator_id');
             $table->string('name')->unique();
+            $table->foreign('creator_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -1,8 +1,8 @@
-setup:
-	composer install
-		cp -n .env.example .env|| true
-		touch database/database.sqlite
-		docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
+install:
+	docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
+	./vendor/bin/sail up -d
+	./vendor/bin/sail php artisan key:generate
+	./vendor/bin/sail php artisan migrate:fresh --seed
 
 start:
 	./vendor/bin/sail up -d
@@ -18,7 +18,7 @@ test:
 	./vendor/bin/sail artisan test
 
 lint-fix:
-	composer phpcbf	
+	./vendor/bin/sail composer phpcbf
 
 deploy:
-	git push heroku main	
+	git push heroku main

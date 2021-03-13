@@ -10,7 +10,7 @@ class TaskStatusController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -21,27 +21,28 @@ class TaskStatusController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        return view('task.statuses.create');
+        $taskStatus = new TaskStatus();
+        return view('task.statuses.create', compact('taskStatus'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses'
         ]);
 
-        TaskStatus::make(['name' => $request->input('name')]);
-        flash('Статус успешно создан!');
+        auth()->user()->taskStatuses()->create($data);
+        flash(__('task_statuses.controller.store.success'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -49,7 +50,7 @@ class TaskStatusController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(TaskStatus $taskStatus)
     {
@@ -61,16 +62,17 @@ class TaskStatusController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, TaskStatus $taskStatus)
+    public function update(Request $request, TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
         $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
-    
+
         $taskStatus->fill($data);
         $taskStatus->save();
+        flash(__('task_statuses.controller.update.success'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -78,15 +80,25 @@ class TaskStatusController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(TaskStatus $taskStatus)
+    public function destroy(TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
+        if ($this->hasNoRights($taskStatus)) {
+            flash(__('task_statuses.controller.destroy.warning'))->warning();
+            return redirect()->route('task_statuses.index');
+        }
+
         if ($taskStatus) {
             $taskStatus->delete();
         }
 
-        flash('Статус успешно удален!')->success();
+        flash(__('task_statuses.controller.destroy.success'))->success();
         return redirect()->route('task_statuses.index');
+    }
+
+    public function hasNoRights($taskStatus): bool
+    {
+        return $taskStatus->creator->id !== auth()->id();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use http\Client\Curl\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,28 +15,15 @@ class TaskStatusSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('task_statuses')->insert([
-            'id' => 1,
-            'name' => 'новый',
-            'created_at' => now()
-        ]);
+        $statuses = ['новый', 'в работе', 'на тестировании', 'завершен'];
+        $user = \App\Models\User::factory()->create();
 
-        DB::table('task_statuses')->insert([
-            'id' => 2,
-            'name' => 'в работе',
-            'created_at' => now()
-        ]);
-
-        DB::table('task_statuses')->insert([
-            'id' => 3,
-            'name' => 'на тестировании',
-            'created_at' => now()
-        ]);
-
-        DB::table('task_statuses')->insert([
-            'id' => 4,
-            'name' => 'завершен',
-            'created_at' => now()
-        ]);
+        foreach ($statuses as $status) {
+            $data = [
+                'name' => $status,
+                'created_at' => now()
+            ];
+            $user->taskStatuses()->create($data);
+        }
     }
 }
