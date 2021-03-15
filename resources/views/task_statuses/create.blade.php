@@ -5,7 +5,7 @@
         {{ __('task_statuses.views.create.h1') }}
     </h1>
     {{ Form::model($taskStatus, ['url' => route('task_statuses.store')]) }}
-        @include('task.statuses.form')
+        @include('task_statuses.form')
         {{ Form::submit(__('task_statuses.views.form.create_btn')) }}
     {{ Form::close() }}
 @endsection

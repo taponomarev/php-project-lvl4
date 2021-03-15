@@ -35,7 +35,7 @@ class TaskStatusControllerTest extends TestCase
     {
         $response = $this->get('/task_statuses/create');
         $response->assertStatus(200);
-        $response->assertSeeText('Добавить статус');
+        $response->assertSeeText('Создать');
     }
 
     public function testStore()

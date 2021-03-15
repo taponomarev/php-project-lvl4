@@ -6,7 +6,7 @@
     </h1>
     <div class="mt-4">
         {{ Form::model($taskStatus, ['url' => route('task_statuses.update', $taskStatus->id), 'method' => 'PATCH']) }}
-            @include('task.statuses.form')
+            @include('task_statuses.form')
             {{ Form::submit(__('task_statuses.views.form.edit_btn')) }}
         {{ Form::close() }}
     </div>

@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TaskStatus::class, 'creator_id');
     }
+
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Task::class, 'created_by_id');
+    }
 }
