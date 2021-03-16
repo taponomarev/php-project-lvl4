@@ -23,8 +23,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::resource('task_statuses', TaskStatusController::class)
-    ->middleware('auth');
 Route::resource('tasks', TaskController::class)
-    ->middleware('auth');
 Route::resource('labels', LabelController::class)
-    ->middleware('auth');
