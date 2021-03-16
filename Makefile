@@ -1,8 +1,11 @@
 setup:
-	cp -n .env.example .env|| true
 	composer install
-	php artisan key:generate --ansi
-	php artisan migrate:fresh --seed
+	cp -n .env.example .env|| true
+	php artisan key:gen --ansi
+	touch database/database.sqlite
+	php artisan migrate
+	php artisan db:seed
+	npm install
 
 install:
 	docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
