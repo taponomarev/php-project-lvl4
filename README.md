@@ -16,8 +16,8 @@ Task Manager is a task management system similar to http://www.redmine.org/. It 
 ```sh
 $ make install
 $ ./vendor/bin/sail up -d
-$ ./vendor/bin/sail artisan key:generate --ansi
-$ ./vendor/bin/sail artisan migrate:fresh --seed
+$ ./vendor/bin/sail php artisan key:generate --ansi
+$ ./vendor/bin/sail php artisan migrate:fresh --seed
 
 * Open address: http://127.0.0.1
 ```
