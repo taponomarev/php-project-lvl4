@@ -40,6 +40,6 @@ class LoginController extends Controller
 
     public function redirectPath(): string
     {
-        return route('tasks.index');
+        return route('welcome');
     }
 }

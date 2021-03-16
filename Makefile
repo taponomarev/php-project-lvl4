@@ -1,8 +1,7 @@
 setup:
-	stat .env || cp .env.example .env
+	composer install
 	php artisan key:generate --ansi
 	php artisan migrate:fresh --seed
-	composer install
 
 install:
 	docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
