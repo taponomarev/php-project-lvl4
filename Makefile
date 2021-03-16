@@ -1,4 +1,5 @@
 setup:
+	cp -n .env.example .env|| true
 	composer install
 	php artisan key:generate --ansi
 	php artisan migrate:fresh --seed
