@@ -15,9 +15,9 @@ jobs:
         with:
           php-version: '8.0'
       - name: Install dependencies
-        run: make install && make start
+          run: composer install
       - name: Run tests
-        run: make test
+          run: php artisan test
       - name: Upload artifact after tests
         if: always()
         uses: actions/upload-artifact@v2

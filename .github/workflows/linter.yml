@@ -11,10 +11,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
-      - name: Build project
-        run: make install && make start
-      - name: Run linter
-        run: make lint
+      - name: Install dependencies
+        run: composer install
+      - name: Run phpcs
+        run: composer phpcs
+      - name: Run phpstan
+        run: composer phpstan
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
