@@ -1,8 +1,6 @@
 install:
 	docker run --rm -v $(shell pwd):/opt -w /opt -u $(shell id -u) laravelsail/php80-composer:latest composer install
-	./vendor/bin/sail up -d
-	./vendor/bin/sail php artisan key:generate
-	./vendor/bin/sail php artisan migrate:fresh --seed
+	stat .env || cp .env.example .env
 
 start:
 	./vendor/bin/sail up -d
