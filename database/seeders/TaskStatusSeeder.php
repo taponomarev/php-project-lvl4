@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use http\Client\Curl\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TaskStatusSeeder extends Seeder
 {
