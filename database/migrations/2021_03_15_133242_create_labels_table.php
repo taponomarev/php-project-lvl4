@@ -17,7 +17,7 @@ class CreateLabelsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->bigInteger('creator_id');
+            $table->integer('creator_id');
             $table->foreign('creator_id')->references('id')->on('users');
             $table->timestamps();
         });

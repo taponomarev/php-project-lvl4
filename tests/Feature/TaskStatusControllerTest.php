@@ -20,25 +20,26 @@ class TaskStatusControllerTest extends TestCase
     {
         parent::setUp();
 
+        /* @phpstan-ignore-next-line */
         $user = User::find(1);
         $this->actingAs($user);
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $response = $this->get('task_statuses');
         $response->assertStatus(200);
         $response->assertSeeText('Статусы');
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $response = $this->get('/task_statuses/create');
         $response->assertStatus(200);
         $response->assertSeeText('Создать');
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $requestData = ['name' => 'Тестовый статус'];
         $response = $this->post('/task_statuses', $requestData);
@@ -48,14 +49,14 @@ class TaskStatusControllerTest extends TestCase
         $this->assertDatabaseHas('task_statuses', $requestData);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $response = $this->get('/task_statuses/1/edit');
         $response->assertStatus(200);
-        $response->assertSeeText('Изменить статус');
+        $response->assertSeeText('Изменение статуса');
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $requestData = ['name' => 'Обновленный статус'];
 
@@ -69,7 +70,7 @@ class TaskStatusControllerTest extends TestCase
         ]);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $response = $this->delete('/task_statuses/1');
         $response->assertSessionHasNoErrors();

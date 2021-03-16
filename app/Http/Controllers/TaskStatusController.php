@@ -42,7 +42,7 @@ class TaskStatusController extends Controller
         ]);
 
         auth()->user()->taskStatuses()->create($data);
-        flash(__('task_statuses.controller.store.success'))->success();
+        flash(__('validation.created', ['name' => 'Статус', 'end' => '']))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -67,12 +67,13 @@ class TaskStatusController extends Controller
     public function update(Request $request, TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
         $data = $this->validate($request, [
+            /** @phpstan-ignore-next-line */
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 
         $taskStatus->fill($data);
         $taskStatus->save();
-        flash(__('task_statuses.controller.update.success'))->success();
+        flash(__('validation.updated', ['name' => 'Статус', 'end' => '']))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -85,20 +86,16 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
         if (!auth()->user()->creator($taskStatus)) {
-            flash(__('task_statuses.controller.destroy.warning'))->warning();
+            flash(__('validation.noRights'))->error();
             return redirect()->route('task_statuses.index');
         }
 
+        /** @phpstan-ignore-next-line */
         if ($taskStatus) {
             $taskStatus->delete();
         }
 
-        flash(__('task_statuses.controller.destroy.success'))->success();
+        flash(__('validation.destroyed', ['name' => 'Статус', 'end' => '']))->success();
         return redirect()->route('task_statuses.index');
-    }
-
-    public function hasNoRights($taskStatus): bool
-    {
-        return $taskStatus->creator->id !== auth()->id();
     }
 }

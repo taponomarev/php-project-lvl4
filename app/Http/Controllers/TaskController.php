@@ -7,6 +7,8 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -17,8 +19,21 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id')
+            ])
+            ->get();
+        session()->put('filter', \request()->input('filter'));
+        $taskStatuses = TaskStatus::all()
+            ->pluck('name', 'id')
+            ->toArray();
+        $users = User::all()
+            ->pluck('name', 'id')
+            ->toArray();
+        return view('tasks.index', compact('tasks', 'taskStatuses', 'users'));
     }
 
     /**
@@ -29,9 +44,15 @@ class TaskController extends Controller
     public function create()
     {
         $task = new Task();
-        $taskStatuses = TaskStatus::all()->pluck('name', 'id')->toArray();
-        $performers = User::all()->pluck('name', 'id')->toArray();
-        $labels = Label::all()->pluck('name', 'id')->toArray();
+        $taskStatuses = TaskStatus::all()
+            ->pluck('name', 'id')
+            ->toArray();
+        $performers = User::all()
+            ->pluck('name', 'id')
+            ->toArray();
+        $labels = Label::all()
+            ->pluck('name', 'id')
+            ->toArray();
         return view('tasks.create', compact('task', 'taskStatuses', 'performers', 'labels'));
     }
 
@@ -51,11 +72,15 @@ class TaskController extends Controller
 
         $data = $request->input('task');
 
-        $task = auth()->user()->tasks()->create($data);
+        $task = auth()->user()
+            ->tasks()
+            ->create($data);
         if (isset($data['labels'])) {
-            $task->labels()->attach($data['labels']);
+            $task
+                ->labels()
+                ->attach($data['labels']);
         }
-        flash(__('Задача успешно создана'))->success();
+        flash(__('validation.created', ['name' => 'Задача', 'end' => 'а']))->success();
         return redirect()->route('tasks.index');
     }
 
@@ -106,7 +131,7 @@ class TaskController extends Controller
             $task->labels()
                 ->sync($data['labels']);
         }
-        flash(__('Задача успешно обновлена'))->success();
+        flash(__('validation.updated', ['name' => 'Задача', 'end' => 'а']))->success();
         return redirect()->route('tasks.index');
     }
 
@@ -119,15 +144,16 @@ class TaskController extends Controller
     public function destroy(Task $task): \Illuminate\Http\RedirectResponse
     {
         if (!auth()->user()->creator($task)) {
-            flash(__('У вас нет прав'))->warning();
+            flash(__('validation.noRights'))->error();
             return redirect()->route('tasks.index');
         }
 
+        /** @phpstan-ignore-next-line */
         if ($task) {
             $task->delete();
         }
 
-        flash(__('Задача успешно удалена'))->success();
+        flash(__('validation.destroyed', ['name' => 'Задача', 'end' => 'а']))->success();
         return redirect()->route('tasks.index');
     }
 }

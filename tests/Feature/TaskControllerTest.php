@@ -22,11 +22,12 @@ class TaskControllerTest extends TestCase
     {
         parent::setUp();
 
+        /* @phpstan-ignore-next-line */
         $user = User::find(1);
         $this->actingAs($user);
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $response = $this->get('/tasks');
 
@@ -34,7 +35,7 @@ class TaskControllerTest extends TestCase
         $response->assertSee('Задачи');
     }
 
-    public function testShow()
+    public function testShow(): void
     {
         $response = $this->get('/tasks/1');
 
@@ -45,7 +46,7 @@ class TaskControllerTest extends TestCase
         $response->assertSee('Описание: Описание');
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $response = $this->get('/tasks/create');
 
@@ -60,7 +61,7 @@ class TaskControllerTest extends TestCase
         ]);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $response = $this->get('/tasks/1/edit');
 
@@ -75,7 +76,7 @@ class TaskControllerTest extends TestCase
         ]);
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $requestData = [
             'name' => 'Тестовая задача 1',
@@ -92,7 +93,7 @@ class TaskControllerTest extends TestCase
         $this->assertDatabaseHas('tasks', $requestData);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $requestData = [
             'name' => 'Тестовая задача (обновленная)',
@@ -110,7 +111,7 @@ class TaskControllerTest extends TestCase
         ]);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $response = $this->delete('/tasks/1');
         $response->assertSessionHasNoErrors();
@@ -121,7 +122,7 @@ class TaskControllerTest extends TestCase
         ]);
     }
 
-    public function testStoreWithLabels()
+    public function testStoreWithLabels(): void
     {
         $requestData = [
             'name' => 'Тестовая задача 2',

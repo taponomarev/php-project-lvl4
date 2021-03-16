@@ -2,28 +2,28 @@
 
 @section('content')
     <h1>
-        {{ __('task_statuses.views.index.h1') }}
+        {{ __('taskStatus.name') }}
     </h1>
     @auth
         <a href="{{ route('task_statuses.create') }}" class="btn btn-primary">
-            {{ __('task_statuses.views.index.create_status_btn') }}
+            {{ __('taskStatus.create') }}
         </a>
     @endauth
     <table class="table mt-4">
         <thead>
           <tr>
             <th scope="col">
-                {{ __('task_statuses.views.index.table.thead.id') }}
+                {{ __('table.id') }}
             </th>
             <th scope="col">
-                {{ __('task_statuses.views.index.table.thead.name') }}
+                {{ __('table.name') }}
             </th>
             <th scope="col">
-                {{ __('task_statuses.views.index.table.thead.created_at') }}
+                {{ __('table.created_at') }}
             </th>
             @auth
                 <th scope="col">
-                    {{ __('task_statuses.views.index.table.thead.action') }}
+                    {{ __('table.actions') }}
                 </th>
             @endauth
           </tr>
@@ -37,10 +37,10 @@
                     @auth
                         <td>
                             <a href="{{ route('task_statuses.edit', $status) }}">
-                                {{ __('task_statuses.views.index.table.tbody.edit_link') }}
+                                {{ __('buttons.edit') }}
                             </a>
-                            <a class="text-danger" href="{{ route('task_statuses.destroy', $status) }}" data-confirm="Вы уверены?" data-method="delete" rel="nofollow">
-                                {{ __('task_statuses.views.index.table.tbody.destroy_link') }}
+                            <a class="text-danger" href="{{ route('task_statuses.destroy', $status) }}" data-confirm="{{ __('forms.areYouSure') }}" data-method="delete" rel="nofollow">
+                                {{ __('buttons.destroy') }}
                             </a>
                         </td>
                     @endauth

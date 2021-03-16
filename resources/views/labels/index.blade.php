@@ -2,31 +2,31 @@
 
 @section('content')
     <h1>
-        {{ __('Метки') }}
+        {{ __('label.name') }}
     </h1>
     @auth
         <a href="{{ route('labels.create') }}" class="btn btn-primary">
-            {{ __('Создать метку') }}
+            {{ __('label.create') }}
         </a>
     @endauth
     <table class="table mt-4">
         <thead>
         <tr>
             <th scope="col">
-                {{ __('ID') }}
+                {{ __('table.id') }}
             </th>
             <th scope="col">
-                {{ __('Имя') }}
+                {{ __('table.name') }}
             </th>
             <th scope="col">
-                {{ __('Описание') }}
+                {{ __('table.description') }}
             </th>
             <th scope="col">
-                {{ __('Дата создания') }}
+                {{ __('table.created_at') }}
             </th>
             @auth
                 <th scope="col">
-                    {{ __('Действия') }}
+                    {{ __('table.actions') }}
                 </th>
             @endauth
         </tr>
@@ -41,10 +41,10 @@
                 @auth
                     <td>
                         <a href="{{ route('labels.edit', $label) }}">
-                            {{ __('Изменить') }}
+                            {{ __('buttons.edit') }}
                         </a>
-                        <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" data-method="delete" rel="nofollow">
-                            {{ __('Удалить') }}
+                        <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="{{ __('forms.areYouSure') }}" data-method="delete" rel="nofollow">
+                            {{ __('buttons.destroy') }}
                         </a>
                     </td>
                 @endauth

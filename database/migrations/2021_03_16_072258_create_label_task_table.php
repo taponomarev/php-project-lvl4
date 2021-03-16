@@ -15,8 +15,8 @@ class CreateLabelTaskTable extends Migration
     {
         Schema::create('label_task', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('task_id');
-            $table->bigInteger('label_id');
+            $table->integer('task_id');
+            $table->integer('label_id');
             $table->foreign('task_id')->references('id')->on('tasks')->cascadeOnDelete();
             $table->foreign('label_id')->references('id')->on('labels')->cascadeOnDelete();
             $table->timestamps();

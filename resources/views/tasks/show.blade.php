@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>{{ __('Просмотр задачи: ') . $task->name }}</h1>
+    <h1>{{ __('task.show') . $task->name }}</h1>
     <ul class="list-group">
         <li class="list-group-item">
-            {{ __('Имя') }}: {{ $task->name }}
+            {{ __('table.name') }}: {{ $task->name }}
         </li>
         <li class="list-group-item">
-            {{ __('Статус') }}: {{ $task->status->name }}
+            {{ __('table.status') }}: {{ $task->status->name }}
         </li>
         <li class="list-group-item">
-            {{ __('Описание') }}: {{ $task->description }}
+            {{ __('table.description') }}: {{ $task->description }}
         </li>
     </ul>
 @endsection

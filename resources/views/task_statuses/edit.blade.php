@@ -2,12 +2,12 @@
 
 @section('content')
     <h1>
-        {{ __('task_statuses.views.edit.h1') }}
+        {{ __('taskStatus.edit') }}
     </h1>
     <div class="mt-4">
         {{ Form::model($taskStatus, ['url' => route('task_statuses.update', $taskStatus->id), 'method' => 'PATCH']) }}
             @include('task_statuses.form')
-            {{ Form::submit(__('task_statuses.views.form.edit_btn')) }}
+            {{ Form::submit(__('buttons.update'), ['class' => 'btn btn-success']) }}
         {{ Form::close() }}
     </div>
 @endsection

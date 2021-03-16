@@ -7,5 +7,7 @@
         </ul>
     </div>
 @endif
-{{ Form::label('name', __('task_statuses.views.form.name')) }}
-{{ Form::text('name', $taskStatus->name) }}<br>
+<div class="col-6 form-group">
+    {{ Form::label('name', __('table.name')) }}
+    {{ Form::text('name', $taskStatus->name, ['class' => 'form-control']) }}<br>
+</div>

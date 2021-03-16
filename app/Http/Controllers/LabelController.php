@@ -32,17 +32,19 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
            'label.name' => 'required'
         ]);
 
         auth()->user()->labels()->create($request->input('label'));
-        flash(__('Метка успешно создана'))->success();
+        flash(__('validation.created', ['name' => 'Метка', 'end' => 'а']))
+            ->success();
         return redirect()->route('labels.index');
     }
 
@@ -60,11 +62,12 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Label  $label
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Label $label
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Label $label)
+    public function update(Request $request, Label $label): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
            'label.name' => 'required'
@@ -72,28 +75,31 @@ class LabelController extends Controller
 
         $label->fill($request->input('label'))
             ->save();
-        flash(__('Метка успешно обновлена'))->success();
+        /* @phpstan-ignore-next-line */
+        flash(__('validation.updated', ['name' => 'Метка', 'end' => 'а']))->success();
         return redirect()->route('labels.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Label  $label
+     * @param \App\Models\Label $label
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function destroy(Label $label)
+    public function destroy(Label $label): \Illuminate\Http\RedirectResponse
     {
         if (!auth()->user()->creator($label)) {
-            flash(__('У вас нет прав'))->warning();
+            flash(__('validation.noRights'))->error();
             return redirect()->route('labels.index');
         }
 
+        /** @phpstan-ignore-next-line */
         if ($label) {
             $label->delete();
         }
 
-        flash(__('Метка успешно удалена'))->success();
+        flash(__('validation.destroyed', ['name' => 'Метка', 'end' => 'а']))->success();
         return redirect()->route('labels.index');
     }
 }

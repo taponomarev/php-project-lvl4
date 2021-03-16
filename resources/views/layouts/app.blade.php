@@ -35,13 +35,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('task_statuses.index') }}">{{ __('Статусы') }}</a>
+                            <a class="nav-link" href="{{ route('tasks.index') }}">{{ trans_choice('task.name', 2) }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tasks.index') }}">{{ __('Задачи') }}</a>
+                            <a class="nav-link" href="{{ route('task_statuses.index') }}">{{ __('taskStatus.name') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('labels.index') }}">{{ __('Метки') }}</a>
+                            <a class="nav-link" href="{{ route('labels.index') }}">{{ __('label.name') }}</a>
                         </li>
                     </ul>
 
@@ -51,13 +51,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('forms.login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('forms.registration') }}</a>
                                 </li>
                             @endif
                         @else
@@ -70,7 +70,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('forms.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
