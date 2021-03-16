@@ -2,7 +2,7 @@
 
 return [
     'areYouSure' => 'Вы уверены?',
-    'logout' => 'Выйти',
+    'logout' => 'Выход',
     'login' => 'Вход',
     'registration' => 'Регистрация',
     'name' => 'Имя',
