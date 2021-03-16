@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->bigInteger('status_id');
             $table->bigInteger('created_by_id');
             $table->bigInteger('assigned_to_id')->nullable();
-            $table->foreign('status_id')->references('id')->on('task_statuses')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('task_statuses')->cascadeOnDelete();
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('assigned_to_id')->references('id')->on('users');
             $table->timestamps();

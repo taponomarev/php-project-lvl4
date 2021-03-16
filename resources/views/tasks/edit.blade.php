@@ -4,8 +4,10 @@
     <h1>
         {{ __('Изменение задачи') }}
     </h1>
-    {{ Form::model($task, ['url' => route('tasks.update', $task), 'method' => 'PATCH']) }}
-    @include('tasks.form')
-    {{ Form::submit(__('Обновить')) }}
-    {{ Form::close() }}
+    <div class="col-6">
+        {{ Form::model($task, ['url' => route('tasks.update', $task), 'method' => 'PATCH']) }}
+        @include('tasks.form')
+        {{ Form::submit(__('Обновить'), ['class' => 'btn btn-success']) }}
+        {{ Form::close() }}
+    </div>
 @endsection

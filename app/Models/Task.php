@@ -16,7 +16,7 @@ class Task extends Model
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
-    public function assigned(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function performer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to_id')->withDefault();
     }
@@ -24,5 +24,10 @@ class Task extends Model
     public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(TaskStatus::class)->withDefault();
+    }
+
+    public function labels(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Label::class);
     }
 }

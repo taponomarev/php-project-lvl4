@@ -15,7 +15,6 @@ class TaskSeeder extends Seeder
     public function run()
     {
         DB::table('tasks')->insert([
-            'id' => 1,
             'name' => 'Тестовая задача',
             'description' => 'Описание',
             'status_id' => 1,

@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function creator($entity): bool
+    {
+        return $entity->creator->id === $this->id;
+    }
+
     public function taskStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(TaskStatus::class, 'creator_id');
@@ -50,5 +55,10 @@ class User extends Authenticatable
     public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Task::class, 'created_by_id');
+    }
+
+    public function labels(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Label::class, 'creator_id');
     }
 }

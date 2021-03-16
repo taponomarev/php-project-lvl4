@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TaskStatusSeeder::class,
             TaskSeeder::class,
+            LabelSeed::class
         ]);
     }
 }

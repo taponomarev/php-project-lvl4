@@ -4,8 +4,10 @@
     <h1>
         {{ __('Создать задачу') }}
     </h1>
-    {{ Form::model($task, ['url' => route('tasks.store')]) }}
-    @include('tasks.form')
-    {{ Form::submit(__('Создать')) }}
-    {{ Form::close() }}
+    <div class="col-6">
+        {{ Form::model($task, ['url' => route('tasks.store')]) }}
+        @include('tasks.form')
+        {{ Form::submit(__('Создать'), ['class' => 'btn btn-primary']) }}
+        {{ Form::close() }}
+    </div>
 @endsection

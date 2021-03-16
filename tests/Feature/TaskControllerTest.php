@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
@@ -117,6 +118,27 @@ class TaskControllerTest extends TestCase
         $response->assertRedirect('/tasks');
         $this->assertDatabaseMissing('tasks', [
             'id' => 1
+        ]);
+    }
+
+    public function testStoreWithLabels()
+    {
+        $requestData = [
+            'name' => 'Тестовая задача 2',
+            'description' => 'Описание задачи',
+            'status_id' => 1,
+            'created_by_id' => 1,
+            'assigned_to_id' => null,
+            'labels' => [1, 2]
+        ];
+
+        $response = $this->post('/tasks', ['task' => $requestData]);
+        $response->assertSessionHasNoErrors();
+        $response->assertSessionHas('flash_notification.0.level', 'success');
+        $response->assertRedirect('/tasks');
+        $this->assertDatabaseHas('label_task', [
+            'task_id' => 2,
+            'label_id' => [1, 2]
         ]);
     }
 }

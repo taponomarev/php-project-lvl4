@@ -84,7 +84,7 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
-        if ($this->hasNoRights($taskStatus)) {
+        if (!auth()->user()->creator($taskStatus)) {
             flash(__('task_statuses.controller.destroy.warning'))->warning();
             return redirect()->route('task_statuses.index');
         }

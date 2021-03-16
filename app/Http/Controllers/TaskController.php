@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Label;
 use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -26,7 +29,10 @@ class TaskController extends Controller
     public function create()
     {
         $task = new Task();
-        return view('tasks.create', compact('task'));
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id')->toArray();
+        $performers = User::all()->pluck('name', 'id')->toArray();
+        $labels = Label::all()->pluck('name', 'id')->toArray();
+        return view('tasks.create', compact('task', 'taskStatuses', 'performers', 'labels'));
     }
 
     /**
@@ -43,7 +49,12 @@ class TaskController extends Controller
             'task.status_id' => 'required',
         ]);
 
-        auth()->user()->tasks()->create($request->input('task'));
+        $data = $request->input('task');
+
+        $task = auth()->user()->tasks()->create($data);
+        if (isset($data['labels'])) {
+            $task->labels()->attach($data['labels']);
+        }
         flash(__('Задача успешно создана'))->success();
         return redirect()->route('tasks.index');
     }
@@ -67,7 +78,10 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', compact('task'));
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id')->toArray();
+        $performers = User::all()->pluck('name', 'id')->toArray();
+        $labels = Label::all()->pluck('name', 'id')->toArray();
+        return view('tasks.edit', compact('task', 'taskStatuses', 'performers', 'labels'));
     }
 
     /**
@@ -85,8 +99,13 @@ class TaskController extends Controller
             'task.status_id' => 'required',
         ]);
 
-        $task->fill($request->input('task'));
-        $task->save();
+        $data = $request->input('task');
+        $task->fill($data)
+            ->save();
+        if (isset($data['labels'])) {
+            $task->labels()
+                ->sync($data['labels']);
+        }
         flash(__('Задача успешно обновлена'))->success();
         return redirect()->route('tasks.index');
     }
@@ -99,7 +118,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): \Illuminate\Http\RedirectResponse
     {
-        if ($this->hasNoRights($task)) {
+        if (!auth()->user()->creator($task)) {
             flash(__('У вас нет прав'))->warning();
             return redirect()->route('tasks.index');
         }
@@ -110,10 +129,5 @@ class TaskController extends Controller
 
         flash(__('Задача успешно удалена'))->success();
         return redirect()->route('tasks.index');
-    }
-
-    public function hasNoRights($task): bool
-    {
-        return $task->creator->id !== auth()->id();
     }
 }
