@@ -17,11 +17,11 @@
 </div>
 <div class="form-group">
     {{ Form::label('status_id', __('table.status')) }}
-    {{ Form::select('status_id', $taskStatuses, $task->status->id, ['class' => 'form-control']) }}<br>
+    {{ Form::select('status_id', $taskStatuses, $task->status->id, ['class' => 'form-control', 'placeholder' => '________']) }}<br>
 </div>
 <div class="form-group">
     {{ Form::label('assigned_to_id', __('table.performer')) }}
-    {{ Form::select('assigned_to_id', $performers, $task->performer->id, ['class' => 'form-control']) }}<br>
+    {{ Form::select('assigned_to_id', $performers, $task->performer->id, ['class' => 'form-control', 'placeholder' => '________']) }}<br>
 </div>
 <div class="form-group">
     {{ Form::label('labels', __('table.labels'), ['class' => 'text-transform']) }}
