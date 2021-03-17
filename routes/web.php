@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/** @phpstan-ignore-next-line */
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');

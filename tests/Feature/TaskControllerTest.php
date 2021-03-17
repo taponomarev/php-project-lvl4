@@ -21,6 +21,7 @@ class TaskControllerTest extends TestCase
 
         /* @phpstan-ignore-next-line */
         $user = User::find(1);
+        /** @phpstan-ignore-next-line */
         $this->actingAs($user);
     }
 

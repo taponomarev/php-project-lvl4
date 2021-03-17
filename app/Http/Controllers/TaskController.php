@@ -27,12 +27,8 @@ class TaskController extends Controller
             ])
             ->get();
         session()->put('filter', \request()->input('filter'));
-        $taskStatuses = TaskStatus::all()
-            ->pluck('name', 'id')
-            ->toArray();
-        $users = User::all()
-            ->pluck('name', 'id')
-            ->toArray();
+        $taskStatuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
         return view('tasks.index', compact('tasks', 'taskStatuses', 'users'));
     }
 
@@ -44,15 +40,9 @@ class TaskController extends Controller
     public function create()
     {
         $task = new Task();
-        $taskStatuses = TaskStatus::all()
-            ->pluck('name', 'id')
-            ->toArray();
-        $performers = User::all()
-            ->pluck('name', 'id')
-            ->toArray();
-        $labels = Label::all()
-            ->pluck('name', 'id')
-            ->toArray();
+        $taskStatuses = TaskStatus::pluck('name', 'id');
+        $performers = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
         return view('tasks.create', compact('task', 'taskStatuses', 'performers', 'labels'));
     }
 
@@ -103,9 +93,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $taskStatuses = TaskStatus::all()->pluck('name', 'id')->toArray();
-        $performers = User::all()->pluck('name', 'id')->toArray();
-        $labels = Label::all()->pluck('name', 'id')->toArray();
+        $taskStatuses = TaskStatus::pluck('name', 'id');
+        $performers = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
         return view('tasks.edit', compact('task', 'taskStatuses', 'performers', 'labels'));
     }
 

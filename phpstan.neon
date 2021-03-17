@@ -6,3 +6,4 @@ parameters:
         - '#Call to an undefined method [a-zA-Z0-9\\_]#'
         - '#Cannot call method [a-zA-Z0-9\\_]#'
         - '#function flash expects [a-zA-Z0-9\\_]#'
+        - '#Call to an undefined static method [a-zA-Z0-9\\_]#'
