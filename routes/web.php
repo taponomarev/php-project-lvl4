@@ -1,10 +1,5 @@
 <?php
 
-use App\Http\Controllers\LabelController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\TaskStatusController;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +10,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Http\Controllers\LabelController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskStatusController;
+use Illuminate\Support\Facades\Route;
 
 /** @phpstan-ignore-next-line */
 Route::get('/', function () {
