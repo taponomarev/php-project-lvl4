@@ -1,6 +1,19 @@
 parameters:
-    reportUnmatchedIgnoredErrors: false
+    level: 8
+    paths:
+        - code/app
+        - code/routes
+        - code/tests
+        - tests
     checkMissingIterableValueType: false
+    excludePaths:
+        - code/routes/console.php
+        - code/app/Http/Middleware/Authenticate.php
+        - code/app/Http/Middleware/RedirectIfAuthenticated.php
+        - code/app/Helpers/HtmlHelper.php
+        - code/routes/channels.php
+        - code/app/Providers/RouteServiceProvider.php
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method [a-zA-Z0-9\\_]#'
         - '#Call to an undefined method [a-zA-Z0-9\\_]#'
