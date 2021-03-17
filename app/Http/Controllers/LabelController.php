@@ -77,7 +77,7 @@ class LabelController extends Controller
         $label->fill($request->except('_token'))
             ->save();
         /* @phpstan-ignore-next-line */
-        flash(__('validation.updated', ['name' => 'Метка', 'end' => 'а']))->success();
+        flash(trans_choice('validation.updated', 2, ['name' => 'Метка']))->success();
         return redirect()->route('labels.index');
     }
 
@@ -100,7 +100,7 @@ class LabelController extends Controller
             $label->delete();
         }
 
-        flash(__('validation.destroyed', ['name' => 'Метка', 'end' => 'а']))->success();
+        flash(trans_choice('validation.destroyed', 2, ['name' => 'Метка']))->success();
         return redirect()->route('labels.index');
     }
 }

@@ -132,7 +132,7 @@ class TaskController extends Controller
             $task->labels()
                 ->sync($data['labels']);
         }
-        flash(__('validation.updated', ['name' => 'Задача', 'end' => 'а']))->success();
+        flash(trans_choice('validation.updated', 2, ['name' => 'Задача']))->success();
         return redirect()->route('tasks.index');
     }
 
@@ -154,7 +154,7 @@ class TaskController extends Controller
             $task->delete();
         }
 
-        flash(__('validation.destroyed', ['name' => 'Задача', 'end' => 'а']))->success();
+        flash(trans_choice('validation.destroyed', 2, ['name' => 'Задача']))->success();
         return redirect()->route('tasks.index');
     }
 }

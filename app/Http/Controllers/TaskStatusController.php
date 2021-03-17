@@ -73,7 +73,7 @@ class TaskStatusController extends Controller
 
         $taskStatus->fill($data);
         $taskStatus->save();
-        flash(__('validation.updated', ['name' => 'Статус', 'end' => '']))->success();
+        flash(trans_choice('validation.updated', 1, ['name' => 'Статус']))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -95,7 +95,7 @@ class TaskStatusController extends Controller
             $taskStatus->delete();
         }
 
-        flash(__('validation.destroyed', ['name' => 'Статус', 'end' => '']))->success();
+        flash(trans_choice('validation.destroyed', 1, ['name' => 'Статус']))->success();
         return redirect()->route('task_statuses.index');
     }
 }
