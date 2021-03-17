@@ -10,12 +10,12 @@
 <div class="col-6">
     <div class="form-group">
         {{ Form::label('name', __('table.name')) }}
-        {{ Form::text('label[name]', $label->name, ['class' => 'form-control']) }}
+        {{ Form::text('name', $label->name, ['class' => 'form-control']) }}
     </div>
 </div>
 <div class="col-6">
     <div class="form-group">
         {{ Form::label('description', __('table.description')) }}
-        {{ Form::text('label[description]', $label->description, ['class' => 'form-control']) }}
+        {{ Form::text('description', $label->description, ['class' => 'form-control']) }}
     </div>
 </div>

@@ -39,10 +39,10 @@ class LabelController extends Controller
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-           'label.name' => 'required'
+           'name' => 'required|unique:labels'
         ]);
 
-        auth()->user()->labels()->create($request->input('label'));
+        auth()->user()->labels()->create($request->except('_token'));
         flash(__('validation.created', ['name' => 'Метка', 'end' => 'а']))
             ->success();
         return redirect()->route('labels.index');
@@ -70,10 +70,11 @@ class LabelController extends Controller
     public function update(Request $request, Label $label): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-           'label.name' => 'required'
+            /** @phpstan-ignore-next-line */
+           'name' => 'required|unique:labels,name,' . $label->id
         ]);
 
-        $label->fill($request->input('label'))
+        $label->fill($request->except('_token'))
             ->save();
         /* @phpstan-ignore-next-line */
         flash(__('validation.updated', ['name' => 'Метка', 'end' => 'а']))->success();

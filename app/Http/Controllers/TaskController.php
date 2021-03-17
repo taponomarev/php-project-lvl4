@@ -66,11 +66,11 @@ class TaskController extends Controller
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-            'task.name' => 'required',
-            'task.status_id' => 'required',
+            'name' => 'required|unique:tasks',
+            'status_id' => 'required',
         ]);
 
-        $data = $request->input('task');
+        $data = $request->except('_token');
 
         $task = auth()->user()
             ->tasks()
@@ -120,11 +120,12 @@ class TaskController extends Controller
     public function update(Request $request, Task $task): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-            'task.name' => 'required',
-            'task.status_id' => 'required',
+            /** @phpstan-ignore-next-line */
+            'name' => 'required|unique:tasks,name,' . $task->id,
+            'status_id' => 'required',
         ]);
 
-        $data = $request->input('task');
+        $data = $request->except('_token');
         $task->fill($data)
             ->save();
         if (isset($data['labels'])) {

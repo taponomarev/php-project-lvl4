@@ -2,11 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
@@ -86,7 +83,7 @@ class TaskControllerTest extends TestCase
             'assigned_to_id' => null
         ];
 
-        $response = $this->post('/tasks', ['task' => $requestData]);
+        $response = $this->post('/tasks', $requestData);
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('flash_notification.0.level', 'success');
         $response->assertRedirect('/tasks');
@@ -100,7 +97,7 @@ class TaskControllerTest extends TestCase
             'status_id' => 2
         ];
 
-        $response = $this->patch('/tasks/1', ['task' => $requestData]);
+        $response = $this->patch('/tasks/1', $requestData);
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('flash_notification.0.level', 'success');
         $response->assertRedirect('/tasks');
@@ -133,7 +130,7 @@ class TaskControllerTest extends TestCase
             'labels' => [1, 2]
         ];
 
-        $response = $this->post('/tasks', ['task' => $requestData]);
+        $response = $this->post('/tasks', $requestData);
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('flash_notification.0.level', 'success');
         $response->assertRedirect('/tasks');
