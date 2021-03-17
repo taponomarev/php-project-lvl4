@@ -34,7 +34,7 @@
         <tbody>
         @forelse ($labels as $label)
             <tr>
-                <th scope="row">{{ $label->id }}</th>
+                <td>{{ $label->id }}</td>
                 <td>{{ $label->name }}</td>
                 <td>{{ $label->description }}</td>
                 <td>{{ $label->created_at }}</td>

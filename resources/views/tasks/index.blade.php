@@ -48,7 +48,7 @@
         <tbody>
             @forelse ($tasks as $task)
                 <tr>
-                    <th scope="row">{{ $task->id }}</th>
+                    <td>{{ $task->id }}</td>
                     <td>{{ $task->status->name }}</td>
                     <td>
                         <a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a>
