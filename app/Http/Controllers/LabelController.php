@@ -32,14 +32,14 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-           'name' => 'required|unique:labels'
+            'name' => 'required|unique:labels'
         ]);
 
         auth()->user()->labels()->create($request->except('_token'));
@@ -51,7 +51,7 @@ class LabelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Label  $label
+     * @param  \App\Models\Label $label
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Label $label)
@@ -62,16 +62,18 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Label $label
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Label        $label
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Label $label): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-            /** @phpstan-ignore-next-line */
-           'name' => 'required|unique:labels,name,' . $label->id
+            /**
+            * @phpstan-ignore-next-line
+            */
+            'name' => 'required|unique:labels,name,' . $label->id
         ]);
 
         $label->fill($request->except('_token'))
@@ -84,7 +86,7 @@ class LabelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Label $label
+     * @param  \App\Models\Label $label
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
@@ -95,7 +97,9 @@ class LabelController extends Controller
             return redirect()->route('labels.index');
         }
 
-        /** @phpstan-ignore-next-line */
+        /**
+         * @phpstan-ignore-next-line
+        */
         if ($label) {
             $label->delete();
         }

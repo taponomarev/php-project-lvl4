@@ -32,7 +32,7 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): \Illuminate\Http\RedirectResponse
@@ -49,7 +49,7 @@ class TaskStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TaskStatus  $taskStatus
+     * @param  \App\Models\TaskStatus $taskStatus
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(TaskStatus $taskStatus)
@@ -60,14 +60,16 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TaskStatus  $taskStatus
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\TaskStatus   $taskStatus
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
         $data = $this->validate($request, [
-            /** @phpstan-ignore-next-line */
+            /**
+            * @phpstan-ignore-next-line
+            */
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 
@@ -80,7 +82,7 @@ class TaskStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TaskStatus  $taskStatus
+     * @param  \App\Models\TaskStatus $taskStatus
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
@@ -90,7 +92,9 @@ class TaskStatusController extends Controller
             return redirect()->route('task_statuses.index');
         }
 
-        /** @phpstan-ignore-next-line */
+        /**
+ * @phpstan-ignore-next-line
+*/
         if ($taskStatus) {
             $taskStatus->delete();
         }

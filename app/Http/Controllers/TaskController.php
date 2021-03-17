@@ -20,11 +20,13 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = QueryBuilder::for(Task::class)
-            ->allowedFilters([
+            ->allowedFilters(
+                [
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id')
-            ])
+                ]
+            )
             ->get();
         session()->put('filter', \request()->input('filter'));
         $taskStatuses = TaskStatus::pluck('name', 'id');
@@ -49,7 +51,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -77,7 +79,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Task $task
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Task $task)
@@ -88,7 +90,7 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Task $task
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Task $task)
@@ -102,15 +104,17 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Task $task
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Task         $task
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Task $task): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
-            /** @phpstan-ignore-next-line */
+            /**
+            * @phpstan-ignore-next-line
+            */
             'name' => 'required|unique:tasks,name,' . $task->id,
             'status_id' => 'required',
         ]);
@@ -129,7 +133,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Task $task): \Illuminate\Http\RedirectResponse
@@ -139,7 +143,9 @@ class TaskController extends Controller
             return redirect()->route('tasks.index');
         }
 
-        /** @phpstan-ignore-next-line */
+        /**
+        * @phpstan-ignore-next-line
+        */
         if ($task) {
             $task->delete();
         }
