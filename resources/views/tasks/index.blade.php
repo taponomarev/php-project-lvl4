@@ -61,9 +61,11 @@
                             <a href="{{ route('tasks.edit', $task) }}">
                                 {{ __('buttons.edit') }}
                             </a>
-                            <a class="text-danger" href="{{ route('tasks.destroy', $task) }}" data-confirm="{{ __('forms.areYouSure') }}" data-method="delete" rel="nofollow">
-                                {{ __('buttons.destroy') }}
-                            </a>
+                            @if(auth()->user()->creator($task))
+                                <a class="text-danger" href="{{ route('tasks.destroy', $task) }}" data-confirm="{{ __('forms.areYouSure') }}" data-method="delete" rel="nofollow">
+                                    {{ __('buttons.destroy') }}
+                                </a>
+                            @endif
                         </td>
                     @endauth
                 </tr>
