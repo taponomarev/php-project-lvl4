@@ -2,10 +2,10 @@
 
 @section('content')
     <h1>
-        {{ __('label.create') }}
+        {{ __('messages.labels.create') }}
     </h1>
     {{ Form::model($label, ['url' => route('labels.store')]) }}
     @include('labels.form')
-    {{ Form::submit(__('buttons.create'), ['class' => 'btn btn-primary']) }}
+    {{ Form::submit(__('messages.create'), ['class' => 'btn btn-primary']) }}
     {{ Form::close() }}
 @endsection

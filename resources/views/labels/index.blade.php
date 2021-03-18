@@ -2,31 +2,31 @@
 
 @section('content')
     <h1>
-        {{ __('label.name') }}
+        {{ __('messages.labels.name') }}
     </h1>
     @auth
         <a href="{{ route('labels.create') }}" class="btn btn-primary">
-            {{ __('label.create') }}
+            {{ __('messages.labels.create') }}
         </a>
     @endauth
     <table class="table mt-4">
         <thead>
         <tr>
             <th scope="col">
-                {{ __('table.id') }}
+                {{ __('messages.id') }}
             </th>
             <th scope="col">
-                {{ __('table.name') }}
+                {{ __('messages.name') }}
             </th>
             <th scope="col">
-                {{ __('table.description') }}
+                {{ __('messages.description') }}
             </th>
             <th scope="col">
-                {{ __('table.created_at') }}
+                {{ __('messages.created_at') }}
             </th>
             @auth
                 <th scope="col">
-                    {{ __('table.actions') }}
+                    {{ __('messages.actions') }}
                 </th>
             @endauth
         </tr>
@@ -41,10 +41,10 @@
                 @auth
                     <td>
                         <a href="{{ route('labels.edit', $label) }}">
-                            {{ __('buttons.edit') }}
+                            {{ __('messages.edit') }}
                         </a>
-                        <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="{{ __('forms.areYouSure') }}" data-method="delete" rel="nofollow">
-                            {{ __('buttons.destroy') }}
+                        <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="{{ __('messages.are_you_sure') }}" data-method="delete" rel="nofollow">
+                            {{ __('messages.destroy') }}
                         </a>
                     </td>
                 @endauth

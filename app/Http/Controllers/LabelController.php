@@ -54,8 +54,7 @@ class LabelController extends Controller
         ]);
 
         auth()->user()->labels()->create($request->except('_token'));
-        flash(__('validation.created', ['name' => 'Метка', 'end' => 'а']))
-            ->success();
+        flash(__('messages.labels.created'))->success();
         return redirect()->route('labels.index');
     }
 
@@ -85,10 +84,10 @@ class LabelController extends Controller
             'name' => 'required|unique:labels,name,' . $label->id
         ]);
 
-        $label->fill($request->except('_token'))
-            ->save();
+        $label->fill($request->except('_token'))->save();
+
         /* @phpstan-ignore-next-line */
-        flash(trans_choice('validation.updated', 2, ['name' => 'Метка']))->success();
+        flash(__('messages.labels.updated'))->success();
         return redirect()->route('labels.index');
     }
 
@@ -106,7 +105,7 @@ class LabelController extends Controller
             $label->delete();
         }
 
-        flash(trans_choice('validation.destroyed', 2, ['name' => 'Метка']))->success();
+        flash(__('messages.labels.destroyed'))->success();
         return redirect()->route('labels.index');
     }
 }

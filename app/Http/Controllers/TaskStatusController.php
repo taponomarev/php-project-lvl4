@@ -54,7 +54,7 @@ class TaskStatusController extends Controller
         ]);
 
         auth()->user()->taskStatuses()->create($data);
-        flash(__('validation.created', ['name' => 'Статус', 'end' => '']))->success();
+        flash(__('messages.task_statuses.created'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -88,7 +88,8 @@ class TaskStatusController extends Controller
 
         $taskStatus->fill($data);
         $taskStatus->save();
-        flash(trans_choice('validation.updated', 1, ['name' => 'Статус']))->success();
+
+        flash(__('messages.task_statuses.updated'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -106,7 +107,7 @@ class TaskStatusController extends Controller
             $taskStatus->delete();
         }
 
-        flash(trans_choice('validation.destroyed', 1, ['name' => 'Статус']))->success();
+        flash(__('messages.task_statuses.destroyed'))->success();
         return redirect()->route('task_statuses.index');
     }
 }

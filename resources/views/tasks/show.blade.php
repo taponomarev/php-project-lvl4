@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>{{ __('task.show') . $task->name }}</h1>
+    <h1>{{ __('messages.tasks.show') . $task->name }}</h1>
     <ul class="list-group">
         <li class="list-group-item">
-            {{ __('table.name') }}: {{ $task->name }}
+            {{ __('messages.name') }}: {{ $task->name }}
         </li>
         <li class="list-group-item">
-            {{ __('table.status') }}: {{ $task->status->name }}
+            {{ __('messages.status') }}: {{ $task->status->name }}
         </li>
         <li class="list-group-item">
-            {{ __('table.description') }}: {{ $task->description }}
+            {{ __('messages.description') }}: {{ $task->description }}
         </li>
     </ul>
 @endsection

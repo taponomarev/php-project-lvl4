@@ -8,6 +8,6 @@
     </div>
 @endif
 <div class="col-6 form-group">
-    {{ Form::label('name', __('table.name')) }}
+    {{ Form::label('name', __('messages.name')) }}
     {{ Form::text('name', $taskStatus->name, ['class' => 'form-control']) }}<br>
 </div>

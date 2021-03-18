@@ -33,9 +33,9 @@ class TaskController extends Controller
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters(
                 [
-                AllowedFilter::exact('status_id'),
-                AllowedFilter::exact('created_by_id'),
-                AllowedFilter::exact('assigned_to_id')
+                    AllowedFilter::exact('status_id'),
+                    AllowedFilter::exact('created_by_id'),
+                    AllowedFilter::exact('assigned_to_id')
                 ]
             )
             ->get();
@@ -83,7 +83,7 @@ class TaskController extends Controller
                 ->labels()
                 ->attach($data['labels']);
         }
-        flash(__('validation.created', ['name' => 'Задача', 'end' => 'а']))->success();
+        flash(__('messages.tasks.created'))->success();
         return redirect()->route('tasks.index');
     }
 
@@ -129,13 +129,13 @@ class TaskController extends Controller
         ]);
 
         $data = $request->except('_token');
-        $task->fill($data)
-            ->save();
+        $task->fill($data)->save();
+
         if (isset($data['labels'])) {
-            $task->labels()
-                ->sync($data['labels']);
+            $task->labels()->sync($data['labels']);
         }
-        flash(trans_choice('validation.updated', 2, ['name' => 'Задача']))->success();
+
+        flash(__('messages.tasks.updated'))->success();
         return redirect()->route('tasks.index');
     }
 
@@ -153,7 +153,7 @@ class TaskController extends Controller
             $task->delete();
         }
 
-        flash(trans_choice('validation.destroyed', 2, ['name' => 'Задача']))->success();
+        flash(__('messages.tasks.destroyed'))->success();
         return redirect()->route('tasks.index');
     }
 }

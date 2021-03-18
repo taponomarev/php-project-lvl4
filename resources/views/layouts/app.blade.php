@@ -35,13 +35,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tasks.index') }}">{{ trans_choice('task.name', 2) }}</a>
+                            <a class="nav-link" href="{{ route('tasks.index') }}">{{ __('messages.tasks.name') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('task_statuses.index') }}">{{ __('taskStatus.name') }}</a>
+                            <a class="nav-link" href="{{ route('task_statuses.index') }}">{{ __('messages.task_statuses.name') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('labels.index') }}">{{ __('label.name') }}</a>
+                            <a class="nav-link" href="{{ route('labels.index') }}">{{ __('messages.labels.name') }}</a>
                         </li>
                     </ul>
 
@@ -51,13 +51,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('forms.login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('messages.sign_in') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('forms.registration') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('messages.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -70,7 +70,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('forms.logout') }}
+                                        {{ __('messages.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
