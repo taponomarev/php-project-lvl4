@@ -3,14 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class TaskStatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
@@ -21,7 +32,7 @@ class TaskStatusController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
@@ -32,10 +43,11 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses'
@@ -49,8 +61,8 @@ class TaskStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TaskStatus $taskStatus
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param TaskStatus $taskStatus
+     * @return Application|Factory|View|Response
      */
     public function edit(TaskStatus $taskStatus)
     {
@@ -60,11 +72,12 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\TaskStatus   $taskStatus
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param TaskStatus $taskStatus
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function update(Request $request, TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, TaskStatus $taskStatus): RedirectResponse
     {
         $data = $this->validate($request, [
             /**
@@ -82,19 +95,13 @@ class TaskStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TaskStatus $taskStatus
-     * @return \Illuminate\Http\RedirectResponse
+     * @param TaskStatus $taskStatus
+     * @return RedirectResponse
+     * @throws \Exception
      */
-    public function destroy(TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
+    public function destroy(TaskStatus $taskStatus): RedirectResponse
     {
-        if (!auth()->user()->creator($taskStatus)) {
-            flash(__('validation.noRights'))->error();
-            return redirect()->route('task_statuses.index');
-        }
-
-        /**
- * @phpstan-ignore-next-line
-*/
+        /* @phpstan-ignore-next-line */
         if ($taskStatus) {
             $taskStatus->delete();
         }

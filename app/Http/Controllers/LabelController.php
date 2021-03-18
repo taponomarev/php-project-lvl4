@@ -3,14 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Label;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class LabelController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class, 'label');
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
@@ -21,7 +32,7 @@ class LabelController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
@@ -32,11 +43,11 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required|unique:labels'
@@ -51,8 +62,8 @@ class LabelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Label $label
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param Label $label
+     * @return Application|Factory|View|Response
      */
     public function edit(Label $label)
     {
@@ -62,17 +73,15 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Label        $label
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @param Label $label
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function update(Request $request, Label $label): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, Label $label): RedirectResponse
     {
         $this->validate($request, [
-            /**
-            * @phpstan-ignore-next-line
-            */
+            /* @phpstan-ignore-next-line */
             'name' => 'required|unique:labels,name,' . $label->id
         ]);
 
@@ -86,20 +95,13 @@ class LabelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Label $label
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Label $label
+     * @return RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Label $label): \Illuminate\Http\RedirectResponse
+    public function destroy(Label $label): RedirectResponse
     {
-        if (!auth()->user()->creator($label)) {
-            flash(__('validation.noRights'))->error();
-            return redirect()->route('labels.index');
-        }
-
-        /**
-         * @phpstan-ignore-next-line
-        */
+        /* @phpstan-ignore-next-line */
         if ($label) {
             $label->delete();
         }
