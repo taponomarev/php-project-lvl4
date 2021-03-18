@@ -41,17 +41,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @phpstan-ignore-next-line
-     */
-    public function creator($entity): bool
-    {
-        /**
-        * @phpstan-ignore-next-line
-        */
-        return $entity->creator->id === $this->id;
-    }
-
     public function taskStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(TaskStatus::class, 'creator_id');
