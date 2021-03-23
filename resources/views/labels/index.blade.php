@@ -43,9 +43,11 @@
                         <a href="{{ route('labels.edit', $label) }}">
                             {{ __('messages.edit') }}
                         </a>
-                        <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="{{ __('messages.are_you_sure') }}" data-method="delete" rel="nofollow">
-                            {{ __('messages.destroy') }}
-                        </a>
+                        @can('delete', $label)
+                            <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="{{ __('messages.are_you_sure') }}" data-method="delete" rel="nofollow">
+                                {{ __('messages.destroy') }}
+                            </a>
+                        @endcan
                     </td>
                 @endauth
             </tr>

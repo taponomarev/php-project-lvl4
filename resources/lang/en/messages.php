@@ -16,6 +16,7 @@ return [
         'edit' => 'Change of status',
         'created' => 'Status successfully created',
         'updated' => 'Status changed successfully',
+        'exists' => 'Unable to delete status',
         'destroyed' => 'Status deleted successfully',
     ],
     'labels' => [
@@ -24,6 +25,7 @@ return [
         'edit' => 'Change label',
         'created' => 'Label created successfully',
         'updated' => 'Label changed successfully',
+        'exists' => 'Unable to delete label',
         'destroyed' => 'Label deleted successfully',
     ],
     'forms' => [

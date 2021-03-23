@@ -74,9 +74,9 @@ class TaskStatusControllerTest extends TestCase
     {
         $response = $this->delete('/task_statuses/1');
         $response->assertSessionHasNoErrors();
-        $response->assertSessionHas('flash_notification.0.level', 'success');
+        $response->assertSessionHas('flash_notification.0.level', 'danger');
         $response->assertRedirect('/task_statuses');
-        $this->assertDatabaseMissing('task_statuses', [
+        $this->assertDatabaseHas('task_statuses', [
             'id' => 1
         ]);
     }

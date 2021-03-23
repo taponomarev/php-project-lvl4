@@ -102,6 +102,11 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus): RedirectResponse
     {
+        if ($taskStatus->tasks()->exists()) {
+            flash(__('messages.task_statuses.exists'))->error();
+            return redirect()->route('task_statuses.index');
+        }
+
         /* @phpstan-ignore-next-line */
         if ($taskStatus) {
             $taskStatus->delete();

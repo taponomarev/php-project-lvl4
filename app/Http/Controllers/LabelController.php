@@ -100,6 +100,11 @@ class LabelController extends Controller
      */
     public function destroy(Label $label): RedirectResponse
     {
+        if ($label->tasks()->exists()) {
+            flash(__('messages.labels.exists'))->error();
+            return back();
+        }
+
         /* @phpstan-ignore-next-line */
         if ($label) {
             $label->delete();

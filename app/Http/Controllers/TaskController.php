@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -129,11 +130,10 @@ class TaskController extends Controller
         ]);
 
         $data = $request->except('_token');
-        $task->fill($data)->save();
+        $labels = $data['labels'] ?? [];
 
-        if (isset($data['labels'])) {
-            $task->labels()->sync($data['labels']);
-        }
+        $task->fill($data)->save();
+        $task->labels()->sync($labels);
 
         flash(__('messages.tasks.updated'))->success();
         return redirect()->route('tasks.index');
@@ -150,6 +150,7 @@ class TaskController extends Controller
     {
         /* @phpstan-ignore-next-line */
         if ($task) {
+            $task->labels()->detach();
             $task->delete();
         }
 
