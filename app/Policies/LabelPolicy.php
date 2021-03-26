@@ -65,7 +65,6 @@ class LabelPolicy
      */
     public function delete(User $user, Label $label): bool
     {
-        /* @phpstan-ignore-next-line */
-        return $user->id == $label->creator_id;
+        return true;
     }
 }
